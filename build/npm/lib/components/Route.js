@@ -82,6 +82,8 @@ Route.propTypes = {
   name: PropTypes.string,
   path: PropTypes.string,
   handler: PropTypes.func,
+  props: PropTypes.object,
+  passParams: PropTypes.bool,
   ignoreScrollBehavior: PropTypes.bool
 };
 

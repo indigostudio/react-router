@@ -1,6 +1,6 @@
+/* jshint -W058 */
 "use strict";
 
-/* jshint -W058 */
 var React = require("react");
 var warning = require("react/lib/warning");
 var invariant = require("react/lib/invariant");
@@ -23,6 +23,7 @@ var Match = require("./Match");
 var Route = require("./Route");
 var supportsHistory = require("./supportsHistory");
 var PathUtils = require("./PathUtils");
+var assign = require("react/lib/Object.assign");
 
 /**
  * The default location for new routers.
@@ -499,7 +500,16 @@ function createRouter(options) {
 
     render: function render() {
       var route = Router.getRouteAtDepth(0);
-      return route ? React.createElement(route.handler, this.props) : null;
+      var params = {};
+      if (route.props) {
+        params = assign(params, route.props);
+      }
+
+      if (route.passParams) {
+        params = assign(params, this.context.router.getCurrentParams());
+      }
+
+      return route ? React.createElement(route.handler, assign(params, this.props)) : null;
     }
 
   });

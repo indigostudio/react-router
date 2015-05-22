@@ -12,7 +12,7 @@ var PathUtils = require("./PathUtils");
 var _currentRoute;
 
 var Route = (function () {
-  function Route(name, path, ignoreScrollBehavior, isDefault, isNotFound, onEnter, onLeave, handler) {
+  function Route(name, path, ignoreScrollBehavior, isDefault, isNotFound, onEnter, onLeave, handler, props, passParams) {
     _classCallCheck(this, Route);
 
     this.name = name;
@@ -24,6 +24,8 @@ var Route = (function () {
     this.onEnter = onEnter;
     this.onLeave = onLeave;
     this.handler = handler;
+    this.props = props;
+    this.passParams = passParams;
   }
 
   _createClass(Route, {
@@ -86,6 +88,8 @@ var Route = (function () {
        *                            only ever need to use this when declaring routes
        *                            independently of one another to manually piece together
        *                            the route hierarchy
+       * - props                    Properties to pass to the route handler.
+       * - passParams               Pass params as properties to the route handler.
        *
        * The callback may be used to structure your route hierarchy. Any call to
        * createRoute, createDefaultRoute, createNotFoundRoute, or createRedirect
@@ -125,7 +129,7 @@ var Route = (function () {
 
         if (options.isNotFound && !/\*$/.test(path)) path += "*"; // Auto-append * to the path of not found routes.
 
-        var route = new Route(name, path, options.ignoreScrollBehavior, options.isDefault, options.isNotFound, options.onEnter, options.onLeave, options.handler);
+        var route = new Route(name, path, options.ignoreScrollBehavior, options.isDefault, options.isNotFound, options.onEnter, options.onLeave, options.handler, options.props, options.passParams);
 
         if (parentRoute) {
           if (route.isDefault) {
