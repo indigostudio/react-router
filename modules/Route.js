@@ -38,6 +38,8 @@ class Route {
    *                            only ever need to use this when declaring routes
    *                            independently of one another to manually piece together
    *                            the route hierarchy
+   * - props                    Properties to pass to the route handler.
+   * - passParams               Pass params as properties to the route handler.
    *
    * The callback may be used to structure your route hierarchy. Any call to
    * createRoute, createDefaultRoute, createNotFoundRoute, or createRedirect
@@ -93,7 +95,9 @@ class Route {
       options.isNotFound,
       options.onEnter,
       options.onLeave,
-      options.handler
+      options.handler,
+      options.props,
+      options.passParams
     );
 
     if (parentRoute) {
@@ -173,7 +177,7 @@ class Route {
     );
   }
 
-  constructor(name, path, ignoreScrollBehavior, isDefault, isNotFound, onEnter, onLeave, handler) {
+  constructor(name, path, ignoreScrollBehavior, isDefault, isNotFound, onEnter, onLeave, handler, props, passParams) {
     this.name = name;
     this.path = path;
     this.paramNames = PathUtils.extractParamNames(this.path);
@@ -183,6 +187,8 @@ class Route {
     this.onEnter = onEnter;
     this.onLeave = onLeave;
     this.handler = handler;
+    this.props = props;
+    this.passParams = passParams;
   }
 
   /**

@@ -548,7 +548,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	    createChildRouteHandler: {
 	      value: function createChildRouteHandler(props) {
 	        var route = this.context.router.getRouteAtDepth(this.getRouteDepth());
-	        return route ? React.createElement(route.handler, assign({}, props || this.props, { ref: REF_NAME })) : null;
+	        
+	        var params = {};
+		    if (route.props) {
+		      params = assign(params, route.props);
+		    } 
+
+		    if (route.passParams) {
+		      params = assign(params, this.context.router.getCurrentParams());
+		    }
+
+	        return route ? React.createElement(route.handler, assign(params, props || this.props, { ref: REF_NAME })) : null;
 	      }
 	    },
 	    render: {
